@@ -230,7 +230,7 @@ namespace hydrogen_lda {
 
         //! A private member variable.
         /*!
-            交換相関積分が格納された4次元配列
+            交換相関積分が格納された2次元配列
         */
         boost::multi_array<double, 2> k_;
 
@@ -263,12 +263,6 @@ namespace hydrogen_lda {
             重なり行列
         */
         Eigen::MatrixXd s_;
-
-        //! A private member variable.
-        /*!
-            交換相関積分が格納された2次元配列
-        */
-        boost::multi_array<double, 2> xc_;
 
         // #region 禁止されたコンストラクタ・メンバ関数
 
