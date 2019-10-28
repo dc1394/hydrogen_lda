@@ -28,10 +28,10 @@
 #include <boost/math/constants/constants.hpp>   // for boost::math::constants::pi
 #include <Eigen/Eigenvalues>                    // for Eigen::GeneralizedSelfAdjointEigenSolver
 
-namespace helium_lda {
+namespace hydrogen_lda {
     // #region コンストラクタ・デストラクタ
 
-    Helium_LDA::Helium_LDA()
+    Hydrogen_LDA::Hydrogen_LDA()
         :   gl_(INTEGTABLENUM),
             pcfunc_(new xc_func_type, xcfunc_deleter),
             pxfunc_(new xc_func_type, xcfunc_deleter)
@@ -54,7 +54,7 @@ namespace helium_lda {
 
     // #region publicメンバ関数 
 
-    std::optional<double> Helium_LDA::do_scfloop()
+    std::optional<double> Hydrogen_LDA::do_scfloop()
     {
         // GTOの肩の係数が格納された配列を生成
         make_alpha();
@@ -78,15 +78,15 @@ namespace helium_lda {
         auto enew = 0.0;
 
         // SCFループ
-        for (auto iter = 1; iter < Helium_LDA::MAXITER; iter++) {
+        for (auto iter = 1; iter < Hydrogen_LDA::MAXITER; iter++) {
             // Fock行列を生成
             make_fockmatrix();
 
             // 一般化固有値問題を解く
             Eigen::GeneralizedSelfAdjointEigenSolver<Eigen::MatrixXd> es(f_, s_);
 
-            // E'を取得
-            auto const ep = es.eigenvalues()[0];
+            // εを取得
+            epsilon = es.eigenvalues()[0];
 
             // 固有ベクトルを取得
             c_ = es.eigenvectors().col(0);
@@ -95,12 +95,12 @@ namespace helium_lda {
             auto const eold = enew;
 
             // 今回のSCF計算のエネルギーを計算する
-            enew = calc_energy(ep);
+            enew = calc_energy();
 
-            std::cout << boost::format("Iteration # %2d: KS eigenvalue = %.14f, energy = %.14f\n") % iter % ep % enew;
+            std::cout << boost::format("Iteration # %2d: KS eigenvalue = %.14f, energy = %.14f\n") % iter % epsilon % enew;
 
             // SCF計算が収束したかどうか
-            if (std::fabs(enew - eold) < Helium_LDA::SCFTHRESHOLD) {
+            if (std::fabs(enew - eold) < Hydrogen_LDA::SCFTHRESHOLD) {
                 // 収束したのでそのエネルギーを返す
                 return std::make_optional(enew);
             }
@@ -110,14 +110,73 @@ namespace helium_lda {
         return std::nullopt;
     }
 
+	void Hydrogen_LDA::express_energy_breakdown() const
+	{
+		using namespace boost::math::constants;
+
+#ifdef _DEBUG
+		auto kinetic_debug = 0.0;
+		for (auto p = 0; p < nalpha_; p++) {
+			for (auto q = 0; q < nalpha_; q++) {
+				// αp + αq
+				auto const appaq = alpha_[p] + alpha_[q];
+
+				kinetic_debug += c_[p] * c_[q] * 3.0 * alpha_[p] * alpha_[q] * std::pow((pi<double>() / appaq), 1.5) / appaq;
+			}
+		}
+#endif
+    	
+		auto nuclear = 0.0;
+		for (auto p = 0; p < nalpha_; p++) {
+			for (auto q = 0; q < nalpha_; q++) {
+				// αp + αq
+				auto const appaq = alpha_[p] + alpha_[q];
+
+				nuclear -= c_[p] * c_[q] * 2.0 * pi<double>() / appaq;
+			}
+		}
+
+		auto hartree = 0.0;
+		for (auto p = 0; p < nalpha_; p++) {
+			for (auto q = 0; q < nalpha_; q++) {
+				for (auto r = 0; r < nalpha_; r++) {
+					for (auto s = 0; s < nalpha_; s++) {
+						hartree += c_[p] * c_[q] * c_[r] * c_[s] * q_[p][q][r][s];
+					}
+				}
+			}
+		}
+
+		auto const exc = calc_exc_energy();
+    	
+		auto vxc = 0.0;
+		for (auto p = 0; p < nalpha_; p++) {
+			for (auto q = 0; q < nalpha_; q++) {
+				vxc += c_[p] * c_[q] * k_[p][q];
+			}
+		}
+
+		auto const kinetic = epsilon - nuclear - hartree - vxc;
+
+#ifdef _DEBUG
+		BOOST_ASSERT(std::fabs(kinetic - kinetic_debug) < EPS);
+#endif
+
+		std::cout << "\nエネルギーの内訳：\n";
+		std::cout << boost::format("運動エネルギー = %.14f (Hartree)\n") % kinetic;
+		std::cout << boost::format("ハートリーエネルギー = %.14f (Hartree)\n") % (0.5 * hartree);
+		std::cout << boost::format("核との相互作用によるエネルギー = %.14f (Hartree)\n") % nuclear;
+		std::cout << boost::format("交換相関エネルギー = %.14f (Hartree)") % exc << std::endl;
+	}
+	
     // #endregion publicメンバ関数
 
     // #region privateメンバ関数
 
-    double Helium_LDA::calc_energy(double ep)
+    double Hydrogen_LDA::calc_energy()
     {
-        // E = E'
-        auto e = ep;
+        // E = ε
+        auto e = epsilon;
 
         for (auto p = 0; p < nalpha_; p++) {
             for (auto q = 0; q < nalpha_; q++) {
@@ -143,7 +202,7 @@ namespace helium_lda {
         return e;
     }
 
-    double Helium_LDA::calc_exc_energy()
+    double Hydrogen_LDA::calc_exc_energy() const
     {
         using namespace boost::math::constants;
         
@@ -173,10 +232,10 @@ namespace helium_lda {
         });
 
         // K'を求める
-        return 4.0 * pi<double>() * gl_.qgauss(func, 0.0, Helium_LDA::MAXR);
+        return 4.0 * pi<double>() * gl_.qgauss(func, 0.0, Hydrogen_LDA::MAXR);
     }
-
-    void Helium_LDA::input_nalpha()
+	
+    void Hydrogen_LDA::input_nalpha()
     {
         while (true) {
             std::cout << "使用するGTOの個数を入力してください (3, 4 or 6): ";
@@ -187,11 +246,11 @@ namespace helium_lda {
             }
 
             std::cin.clear();
-            std::cin.ignore(Helium_LDA::MAXBUFSIZE, '\n');
+            std::cin.ignore(Hydrogen_LDA::MAXBUFSIZE, '\n');
         }
     }
 
-    void Helium_LDA::make_alpha()
+    void Hydrogen_LDA::make_alpha()
     {
         switch (nalpha_) {
         case 3:
@@ -212,7 +271,7 @@ namespace helium_lda {
         }
     }
 
-    void Helium_LDA::make_c(double val)
+    void Hydrogen_LDA::make_c(double val)
     {
         c_.resize(nalpha_);
         // 固有ベクトルCの要素を全てvalで初期化
@@ -221,7 +280,7 @@ namespace helium_lda {
         }
     }
 
-    void Helium_LDA::make_exchcorrinteg()
+    void Hydrogen_LDA::make_exchcorrinteg()
     {
         using namespace boost::math::constants;
         
@@ -253,12 +312,12 @@ namespace helium_lda {
                 });
         
                 // Kpqの要素を埋める
-                k_[p][q] = 4.0 * pi<double>() * gl_.qgauss(func, 0.0, Helium_LDA::MAXR);
+                k_[p][q] = 4.0 * pi<double>() * gl_.qgauss(func, 0.0, Hydrogen_LDA::MAXR);
             }
         }
     }
 
-    void Helium_LDA::make_fockmatrix()
+    void Hydrogen_LDA::make_fockmatrix()
     {
         // 交換相関積分を計算
         make_exchcorrinteg();
@@ -277,7 +336,7 @@ namespace helium_lda {
         }
     }
 
-    void Helium_LDA::make_oneelectroninteg()
+    void Hydrogen_LDA::make_oneelectroninteg()
     {
         using namespace boost::math::constants;
 
@@ -293,7 +352,7 @@ namespace helium_lda {
         }
     }
 
-    void Helium_LDA::make_overlapmatrix()
+    void Hydrogen_LDA::make_overlapmatrix()
     {
         using namespace boost::math::constants;
 
@@ -305,7 +364,7 @@ namespace helium_lda {
         }
     }
 
-    void Helium_LDA::make_twoelectroninteg()
+    void Hydrogen_LDA::make_twoelectroninteg()
     {
         using namespace boost::math::constants;
 
@@ -323,7 +382,7 @@ namespace helium_lda {
         }
     }
 
-    void Helium_LDA::normalize()
+    void Hydrogen_LDA::normalize()
     {
         using namespace boost::math::constants;
         auto const func = myfunctional::make_functional([this](double x)
@@ -337,7 +396,7 @@ namespace helium_lda {
             return x * x * f * f;
         });
 
-        auto const sum = 4.0 * pi<double>() * gl_.qgauss(func, 0.0, Helium_LDA::MAXR);
+        auto const sum = 4.0 * pi<double>() * gl_.qgauss(func, 0.0, Hydrogen_LDA::MAXR);
 
         for (auto p = 0; p < nalpha_; p++)
         {

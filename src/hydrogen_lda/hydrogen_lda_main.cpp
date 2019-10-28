@@ -22,9 +22,10 @@
 
 int main()
 {
-    helium_lda::Helium_LDA hl;
+    hydrogen_lda::Hydrogen_LDA hl;
     if (auto const res(hl.do_scfloop()); res) {
         std::cout << boost::format("SCF計算が収束しました: energy = %.14f (Hartree)") % (*res) << std::endl;
+		hl.express_energy_breakdown();
 
         return 0;
     }

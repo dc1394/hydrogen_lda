@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\alglib">
+      <UniqueIdentifier>{22694d68-2701-4932-829a-d4865fe7d2ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\alglib">
+      <UniqueIdentifier>{51b605da-e7e1-443c-bddc-dbe88a4c4a8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\myfunctional">
+      <UniqueIdentifier>{27c21dfc-b245-459d-b826-0dd8439b0d02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\gausslegendre">
+      <UniqueIdentifier>{c8140887-04e0-4e12-8664-64c1ef3ac203}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\gausslegendre">
+      <UniqueIdentifier>{cfba2e6d-6ea6-4e8c-bdd2-96e1d625f0d9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="hydrogen_lda\gausslegendre\gausslegendre.cpp">
+      <Filter>ソース ファイル\gausslegendre</Filter>
+    </ClCompile>
+    <ClCompile Include="alglib\src\alglibinternal.cpp">
+      <Filter>ソース ファイル\alglib</Filter>
+    </ClCompile>
+    <ClCompile Include="alglib\src\alglibmisc.cpp">
+      <Filter>ソース ファイル\alglib</Filter>
+    </ClCompile>
+    <ClCompile Include="alglib\src\ap.cpp">
+      <Filter>ソース ファイル\alglib</Filter>
+    </ClCompile>
+    <ClCompile Include="alglib\src\dataanalysis.cpp">
+      <Filter>ソース ファイル\alglib</Filter>
+    </ClCompile>
+    <ClCompile Include="alglib\src\diffequations.cpp">
+      <Filter>ソース ファイル\alglib</Filter>
+    </ClCompile>
+    <ClCompile Include="alglib\src\fasttransforms.cpp">
+      <Filter>ソース ファイル\alglib</Filter>
+    </ClCompile>
+    <ClCompile Include="alglib\src\integration.cpp">
+      <Filter>ソース ファイル\alglib</Filter>
+    </ClCompile>
+    <ClCompile Include="alglib\src\interpolation.cpp">
+      <Filter>ソース ファイル\alglib</Filter>
+    </ClCompile>
+    <ClCompile Include="alglib\src\linalg.cpp">
+      <Filter>ソース ファイル\alglib</Filter>
+    </ClCompile>
+    <ClCompile Include="alglib\src\optimization.cpp">
+      <Filter>ソース ファイル\alglib</Filter>
+    </ClCompile>
+    <ClCompile Include="alglib\src\solvers.cpp">
+      <Filter>ソース ファイル\alglib</Filter>
+    </ClCompile>
+    <ClCompile Include="alglib\src\specialfunctions.cpp">
+      <Filter>ソース ファイル\alglib</Filter>
+    </ClCompile>
+    <ClCompile Include="alglib\src\statistics.cpp">
+      <Filter>ソース ファイル\alglib</Filter>
+    </ClCompile>
+    <ClCompile Include="hydrogen_lda\hydrogen_lda.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="hydrogen_lda\hydrogen_lda_main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="hydrogen_lda\gausslegendre\gausslegendre.h">
+      <Filter>ヘッダー ファイル\gausslegendre</Filter>
+    </ClInclude>
+    <ClInclude Include="alglib\src\alglibinternal.h">
+      <Filter>ヘッダー ファイル\alglib</Filter>
+    </ClInclude>
+    <ClInclude Include="alglib\src\alglibmisc.h">
+      <Filter>ヘッダー ファイル\alglib</Filter>
+    </ClInclude>
+    <ClInclude Include="alglib\src\ap.h">
+      <Filter>ヘッダー ファイル\alglib</Filter>
+    </ClInclude>
+    <ClInclude Include="alglib\src\dataanalysis.h">
+      <Filter>ヘッダー ファイル\alglib</Filter>
+    </ClInclude>
+    <ClInclude Include="alglib\src\diffequations.h">
+      <Filter>ヘッダー ファイル\alglib</Filter>
+    </ClInclude>
+    <ClInclude Include="alglib\src\fasttransforms.h">
+      <Filter>ヘッダー ファイル\alglib</Filter>
+    </ClInclude>
+    <ClInclude Include="alglib\src\integration.h">
+      <Filter>ヘッダー ファイル\alglib</Filter>
+    </ClInclude>
+    <ClInclude Include="alglib\src\interpolation.h">
+      <Filter>ヘッダー ファイル\alglib</Filter>
+    </ClInclude>
+    <ClInclude Include="alglib\src\linalg.h">
+      <Filter>ヘッダー ファイル\alglib</Filter>
+    </ClInclude>
+    <ClInclude Include="alglib\src\optimization.h">
+      <Filter>ヘッダー ファイル\alglib</Filter>
+    </ClInclude>
+    <ClInclude Include="alglib\src\solvers.h">
+      <Filter>ヘッダー ファイル\alglib</Filter>
+    </ClInclude>
+    <ClInclude Include="alglib\src\specialfunctions.h">
+      <Filter>ヘッダー ファイル\alglib</Filter>
+    </ClInclude>
+    <ClInclude Include="alglib\src\statistics.h">
+      <Filter>ヘッダー ファイル\alglib</Filter>
+    </ClInclude>
+    <ClInclude Include="alglib\src\stdafx.h">
+      <Filter>ヘッダー ファイル\alglib</Filter>
+    </ClInclude>
+    <ClInclude Include="hydrogen_lda\myfunctional\Functional.h">
+      <Filter>ヘッダー ファイル\myfunctional</Filter>
+    </ClInclude>
+    <ClInclude Include="hydrogen_lda\hydrogen_lda.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

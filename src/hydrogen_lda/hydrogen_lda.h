@@ -30,7 +30,7 @@
 #include <Eigen/Core>                   // for Eigen::MatrixXd, Eigen::VectorXd
 #include <xc.h>                         // for xc_func_end
 
-namespace helium_lda {
+namespace hydrogen_lda {
     //! A lambda expression.
     /*!
         xc_func_typeへのポインタを解放するラムダ式
@@ -45,7 +45,7 @@ namespace helium_lda {
     /*!
         VWN-LDAを用い、Kohn-Sham法でヘリウム原子のエネルギーを計算するクラス
     */
-    class Helium_LDA final {
+    class Hydrogen_LDA final {
         // #region コンストラクタ・デストラクタ
 
     public:
@@ -53,13 +53,13 @@ namespace helium_lda {
         /*!
             唯一のコンストラクタ
         */
-        Helium_LDA();
+        Hydrogen_LDA();
 
         //! A destructor.
         /*!
             デストラクタ
         */
-        ~Helium_LDA() = default;
+        ~Hydrogen_LDA() = default;
 
         // #region publicメンバ関数
 
@@ -70,6 +70,12 @@ namespace helium_lda {
         */
         std::optional<double> do_scfloop();
 
+		//! A private member function.
+		/*!
+			エネルギーの内訳を表示する
+		*/
+		void express_energy_breakdown() const;
+
         // #endregion publicメンバ関数
 
         // #region privateメンバ関数
@@ -78,18 +84,17 @@ namespace helium_lda {
         //! A private member function.
         /*!
             nalpha個のGTOによるヘリウム原子のエネルギーを計算する
-            \param ep 一般化固有値問題のエネルギー固有値E'
             \return ヘリウム原子のエネルギー
         */
-        double calc_energy(double ep);
+        double calc_energy();
 
         //! A private member function.
         /*!
             nalpha個のGTOによるヘリウム原子の交換相関エネルギーを計算する
             \return ヘリウム原子の交換相関エネルギー
         */
-        double calc_exc_energy();
-
+        double calc_exc_energy() const;
+    	
         //! A private member function.
         /*!
             使用するGTOの数をユーザに入力させる
@@ -149,6 +154,14 @@ namespace helium_lda {
 
         // #region メンバ変数
 
+#ifdef _DEBUG
+		//! A private member variable (constant expression).
+		/*!
+			許容誤差
+		*/
+		static auto constexpr EPS = 1.0E-13;
+#endif
+  
         //! A private member variable (constant expression).
         /*!
             Gauss-Legendre積分の分点
@@ -191,6 +204,12 @@ namespace helium_lda {
         */
         Eigen::VectorXd c_;
 
+		//! A private member variable.
+		/*!
+			軌道エネルギーε
+		*/
+		double epsilon = 0.0;
+    	
         //! A private member variable.
         /*!
             Fock行列
@@ -259,7 +278,7 @@ namespace helium_lda {
             コピーコンストラクタ（禁止）
             \param dummy コピー元のオブジェクト（未使用）
         */
-        Helium_LDA(Helium_LDA const & dummy) = delete;
+        Hydrogen_LDA(Hydrogen_LDA const & dummy) = delete;
 
         //! A public member function (deleted).
         /*!
@@ -267,7 +286,7 @@ namespace helium_lda {
             \param dummy コピー元のオブジェクト（未使用）
             \return コピー元のオブジェクト
         */
-        Helium_LDA & operator=(Helium_LDA const & dummy) = delete;
+        Hydrogen_LDA & operator=(Hydrogen_LDA const & dummy) = delete;
 
         // #endregion 禁止されたコンストラクタ・メンバ関数
     };

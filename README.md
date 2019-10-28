@@ -1,28 +1,27 @@
 ﻿================================================================================
-【 ソフト名 】helium_lda
+【 ソフト名 】hydrogen_lda
 【  作成者  】@dc1394
 ================================================================================
 
 ★これは何？
-　GTOによるKohn-Sham-Roothaan方程式を解くことにより、ヘリウム原子の基底状態のエ
-　ネルギーを求めるコードです。ビルドには以下のライブラリが必要です。
+　GTOによるKohn-Sham-Roothaan方程式を解くことにより、水素原子の基底状態のエネル
+　ギーを求めるコードです。ビルドには以下のライブラリが必要です。
 　・Boost C++ Libraries
 　・Eigen
 　・Libxc
 
 ★更新履歴
-　2019/3/28 ver.1.0   README.mdを書いて公開。
-　2019/4/21 ver.1.1   ALGLIBの使用に伴い、ライセンスを改訂。
+　2019/10/28 ver.1.0   README.mdを書いて公開。
 
 ★ライセンス
 　このソフトはフリーソフトウェアです。ライセンスはGNU General Public License
 　v3.0）です。
 --------------------------------------------------------------------------------
-　helium_lda
+　hydrogen_lda
 　Copyright (C) 2019 @dc1394
 
-  helium_ldaにはBoostコミュニティによるBoost C++ Librariesを使用しています。こち
-　らのライセンスは Boostライセンス になります。
+  hydrogen_ldaにはBoostコミュニティによるBoost C++ Librariesを使用しています。こ
+  ちらのライセンスは Boostライセンス になります。
 
 /* Boost Software License - Version 1.0 - August 17th, 2003
 *
@@ -49,11 +48,11 @@
 * DEALINGS IN THE SOFTWARE.
 */
 
-　helium_ldaにはALGLIB ProjectによるALGLIB®を使用しています。こちらのライセンス
-　はGPL 2+になります。
+　hydrogen_ldaにはALGLIB ProjectによるALGLIB®を使用しています。こちらのライセン
+　スはGPL 2+になります。
 
-　helium_ldaにはEigen projectによるEigenを使用しています。こちらのライセンスは
+　hydrogen_ldaにはEigen projectによるEigenを使用しています。こちらのライセンスは
 　MPL2になります。
 
-　helium_ldaにはMiguel A. L. MarquesらによるLibxcを使用しています。こちらのライ
-　センスはMozilla Public License 2.0になります。
+　hydrogen_ldaにはMiguel A. L. MarquesらによるLibxcを使用しています。こちらのラ
+　イセンスはMozilla Public License 2.0になります。
