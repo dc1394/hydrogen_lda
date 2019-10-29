@@ -86,7 +86,7 @@ namespace hydrogen_lda {
             Eigen::GeneralizedSelfAdjointEigenSolver<Eigen::MatrixXd> es(f_, s_);
 
             // εを取得
-            epsilon = es.eigenvalues()[0];
+            epsilon_ = es.eigenvalues()[0];
 
             // 固有ベクトルを取得
             c_ = es.eigenvectors().col(0);
@@ -97,7 +97,7 @@ namespace hydrogen_lda {
             // 今回のSCF計算のエネルギーを計算する
             enew = calc_energy();
 
-            std::cout << boost::format("Iteration # %2d: KS eigenvalue = %.14f, energy = %.14f\n") % iter % epsilon % enew;
+            std::cout << boost::format("Iteration # %2d: KS eigenvalue = %.14f, energy = %.14f\n") % iter % epsilon_ % enew;
 
             // SCF計算が収束したかどうか
             if (std::fabs(enew - eold) < Hydrogen_LDA::SCFTHRESHOLD) {
@@ -156,7 +156,7 @@ namespace hydrogen_lda {
 			}
 		}
 
-		auto const kinetic = epsilon - nuclear - hartree - vxc;
+		auto const kinetic = epsilon_ - nuclear - hartree - vxc;
 
 #ifdef _DEBUG
 		BOOST_ASSERT(std::fabs(kinetic - kinetic_debug) < EPS);
@@ -176,7 +176,7 @@ namespace hydrogen_lda {
     double Hydrogen_LDA::calc_energy()
     {
         // E = ε
-        auto e = epsilon;
+        auto e = epsilon_;
 
         for (auto p = 0; p < nalpha_; p++) {
             for (auto q = 0; q < nalpha_; q++) {
@@ -220,7 +220,7 @@ namespace hydrogen_lda {
             std::array<double, 2> rho = { rhotemp, 0.0 };
 
             // 交換相関エネルギー
-            std::array<double, 2> zk_x, zk_c;
+			std::array<double, 2> zk_x{}, zk_c{};
 
             // 交換エネルギーを求める
             xc_lda_exc(pxfunc_.get(), 1, rho.data(), zk_x.data());
@@ -300,7 +300,7 @@ namespace hydrogen_lda {
                     std::array<double, 2> rho = { rhotemp, 0.0 };
 
                     // 交換相関ポテンシャル
-                    std::array<double, 2> zk_x, zk_c;
+					std::array<double, 2> zk_x{}, zk_c{};
 
                     // 交換ポテンシャルを求める
                     xc_lda_vxc(pxfunc_.get(), 1, rho.data(), zk_x.data());

@@ -70,7 +70,7 @@ namespace hydrogen_lda {
         */
         std::optional<double> do_scfloop();
 
-		//! A private member function.
+		//! A private member function (const).
 		/*!
 			エネルギーの内訳を表示する
 		*/
@@ -88,7 +88,7 @@ namespace hydrogen_lda {
         */
         double calc_energy();
 
-        //! A private member function.
+        //! A private member function (const).
         /*!
             nalpha個のGTOによるヘリウム原子の交換相関エネルギーを計算する
             \return ヘリウム原子の交換相関エネルギー
@@ -208,7 +208,7 @@ namespace hydrogen_lda {
 		/*!
 			軌道エネルギーε
 		*/
-		double epsilon = 0.0;
+		double epsilon_ = 0.0;
     	
         //! A private member variable.
         /*!
