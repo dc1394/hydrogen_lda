@@ -44,5 +44,22 @@ namespace gausslegendre {
     }
 
     // #endregion コンストラクタ
+
+    // #region template publicメンバ関数
+
+    double Gauss_Legendre::qgauss(std::function<double(double)> const & func, double x1, double x2) const
+    {
+        auto const xm = 0.5 * (x1 + x2);
+        auto const xr = 0.5 * (x2 - x1);
+
+        auto sum = 0.0;
+        for (auto i = 0U; i < n_; i++) {
+			sum += w_[i] * func(xm + xr * x_[i]);
+        }
+
+        return sum * xr;
+    }
+
+    // #endregion template publicメンバ関数
 }
 

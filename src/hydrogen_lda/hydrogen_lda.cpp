@@ -18,7 +18,6 @@
 */
 
 #include "hydrogen_lda.h"
-#include "myfunctional/functional.h"
 #include <array>                                // for std::array
 #include <cmath>                                // for std::pow, std::sqrt
 #include <iostream>                             // for std::cerr, std::cin, std::cout
@@ -206,7 +205,7 @@ namespace hydrogen_lda {
     {
         using namespace boost::math::constants;
         
-        auto const func = myfunctional::make_functional([this](double x)
+        auto const func = [this](double x)
         {
             auto rhotemp = 0.0;
             for (auto r = 0; r < nalpha_; r++)
@@ -229,7 +228,7 @@ namespace hydrogen_lda {
             xc_lda_exc(pcfunc_.get(), 1, rho.data(), zk_c.data());
 
             return x * x * (zk_x[0] + zk_c[0]) * rhotemp;
-        });
+        };
 
         // K'を求める
         return 4.0 * pi<double>() * gl_.qgauss(func, 0.0, Hydrogen_LDA::MAXR);
@@ -286,7 +285,7 @@ namespace hydrogen_lda {
         
         for (auto p = 0; p < nalpha_; p++) {
             for (auto q = 0; q < nalpha_; q++) {
-                auto const func = myfunctional::make_functional([this, p, q](double x)
+                auto const func =[this, p, q](double x)
                 {
                     auto rhotemp = 0.0;
                     for (auto r = 0; r < nalpha_; r++)
@@ -309,7 +308,7 @@ namespace hydrogen_lda {
                     xc_lda_vxc(pcfunc_.get(), 1, rho.data(), zk_c.data());
 
                     return x * x * std::exp(-alpha_[p] * x * x) * (zk_x[0] + zk_c[0]) * std::exp(-alpha_[q] * x * x);
-                });
+                };
         
                 // Kpqの要素を埋める
                 k_[p][q] = 4.0 * pi<double>() * gl_.qgauss(func, 0.0, Hydrogen_LDA::MAXR);
@@ -385,22 +384,16 @@ namespace hydrogen_lda {
     void Hydrogen_LDA::normalize()
     {
         using namespace boost::math::constants;
-        auto const func = myfunctional::make_functional([this](double x)
-        {
-            auto f = 0.0;
-            for (auto p = 0; p < nalpha_; p++)
-            {
-                f += c_[p] * std::exp(-alpha_[p] * x * x);
+
+        auto sum = 0.0;
+        for (auto p = 0; p < nalpha_; p++) {
+            for (auto q = 0; q < nalpha_; q++) {
+                sum += c_[p] * c_[q] / (4.0 * (alpha_[p] + alpha_[q])) * std::pow(pi<double>() / (alpha_[p] + alpha_[q]), 0.5);
             }
+        }
 
-            return x * x * f * f;
-        });
-
-        auto const sum = 4.0 * pi<double>() * gl_.qgauss(func, 0.0, Hydrogen_LDA::MAXR);
-
-        for (auto p = 0; p < nalpha_; p++)
-        {
-            c_[p] /= sum;
+        for (auto p = 0; p < nalpha_; p++) {
+            c_[p] /= std::sqrt(4.0 * pi<double>() * sum);
         }
     }
 

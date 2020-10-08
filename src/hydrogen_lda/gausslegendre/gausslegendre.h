@@ -21,9 +21,9 @@
 
 #pragma once
 
-#include "../myfunctional/functional.h"
-#include <cstdint>                          // for std::int32_t
-#include <vector>                           // for std::vector
+#include <cstdint>      // for std::int32_t
+#include <functional>   // for std::function
+#include <vector>       // for std::vector
 
 namespace gausslegendre {
     //! A class.
@@ -52,7 +52,6 @@ namespace gausslegendre {
 
         // #region メンバ関数
 
-		template <typename FUNCTYPE>
         //! A public member function (template function).
         /*!
             Gauss-Legendre積分を実行する
@@ -61,7 +60,7 @@ namespace gausslegendre {
             \param x2 積分の上端
             \return 積分値
         */
-        double qgauss(myfunctional::Functional<FUNCTYPE> const & func, double x1, double x2) const;
+        double qgauss(std::function<double(double)> const & func, double x1, double x2) const;
 
         // #endregion メンバ関数
 
@@ -114,25 +113,6 @@ namespace gausslegendre {
 
         // #endregion 禁止されたコンストラクタ・メンバ関数
 	};
-
-    // #region template publicメンバ関数
-
-    template <typename FUNCTYPE>
-    double Gauss_Legendre::qgauss(myfunctional::Functional<FUNCTYPE> const & func, double x1, double x2) const
-    {
-        auto const xm = 0.5 * (x1 + x2);
-        auto const xr = 0.5 * (x2 - x1);
-
-        auto sum = 0.0;
-        for (auto i = 0U; i < n_; i++) {
-			sum += w_[i] * func(xm + xr * x_[i]);
-        }
-
-        return sum * xr;
-    }
-
-    // #endregion template publicメンバ関数
 }
 
 #endif  // _GAUSS_LEGENDRE_H_
-
