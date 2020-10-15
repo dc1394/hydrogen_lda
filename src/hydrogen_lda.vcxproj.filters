@@ -19,9 +19,6 @@
     <Filter Include="ヘッダー ファイル\alglib">
       <UniqueIdentifier>{51b605da-e7e1-443c-bddc-dbe88a4c4a8c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\myfunctional">
-      <UniqueIdentifier>{27c21dfc-b245-459d-b826-0dd8439b0d02}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\gausslegendre">
       <UniqueIdentifier>{c8140887-04e0-4e12-8664-64c1ef3ac203}</UniqueIdentifier>
     </Filter>
@@ -124,9 +121,6 @@
     </ClInclude>
     <ClInclude Include="alglib\src\stdafx.h">
       <Filter>ヘッダー ファイル\alglib</Filter>
-    </ClInclude>
-    <ClInclude Include="hydrogen_lda\myfunctional\Functional.h">
-      <Filter>ヘッダー ファイル\myfunctional</Filter>
     </ClInclude>
     <ClInclude Include="hydrogen_lda\hydrogen_lda.h">
       <Filter>ヘッダー ファイル</Filter>
