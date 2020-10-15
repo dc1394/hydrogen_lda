@@ -36,12 +36,12 @@ CXX = g++
 #
 # C++コンパイラに与える、（最適化等の）オプション
 #
-CXXFLAGS = -Wall -Wextra -O3 -std=c++17 -mtune=native -march=native
+CXXFLAGS = -Wall -Wextra -O3 -std=c++17 -mtune=native -march=native -fopenmp -I/home/dc1394/oss/libxc-5.0.0/src
 
 #
 # リンク対象に含めるライブラリの指定
 #
-LDFLAGS = -lm -ldl -lxc
+LDFLAGS = -lm -ldl -L/home/dc1394/oss/libxc-5.0.0/src/.libs -lxc
 
 #
 # makeの動作
