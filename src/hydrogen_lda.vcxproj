@@ -53,7 +53,6 @@
     <ClInclude Include="alglib\src\stdafx.h" />
     <ClInclude Include="hydrogen_lda\gausslegendre\gausslegendre.h" />
     <ClInclude Include="hydrogen_lda\hydrogen_lda.h" />
-    <ClInclude Include="hydrogen_lda\myfunctional\Functional.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -168,7 +167,7 @@
       <ConformanceMode>true</ConformanceMode>
       <CCppSupport>Cpp17Support</CCppSupport>
       <PrecompiledHeaderFile />
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>C:\mylib64\libxc\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>

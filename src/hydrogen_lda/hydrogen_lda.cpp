@@ -388,7 +388,7 @@ namespace hydrogen_lda {
         auto sum = 0.0;
         for (auto p = 0; p < nalpha_; p++) {
             for (auto q = 0; q < nalpha_; q++) {
-                sum += c_[p] * c_[q] / (4.0 * (alpha_[p] + alpha_[q])) * std::pow(pi<double>() / (alpha_[p] + alpha_[q]), 0.5);
+                sum += c_[p] * c_[q] / (4.0 * (alpha_[p] + alpha_[q])) * std::sqrt(pi<double>() / (alpha_[p] + alpha_[q]));
             }
         }
 
