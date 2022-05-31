@@ -16,12 +16,11 @@
     with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef _HELIUM_LDA_H_
-#define _HELIUM_LDA_H_
+#ifndef _HYDROGEN_LDA_H_
+#define _HYDROGEN_LDA_H_
 
 #pragma once
 
-#include "gausslegendre/gausslegendre.h"
 #include <cstdint>                      // for std::int32_t
 #include <memory>                       // for std::shared_ptr, std::unique_ptr
 #include <optional>                     // for std::optional
@@ -116,7 +115,7 @@ namespace hydrogen_lda {
 
         //! A private member function.
         /*!
-            交換相関積分が格納された、nalpha×nalphaの2次元配列を生成する
+            交換相関積分が格納された、nalpha☓nalphaの2次元配列を生成する
         */
         void make_exchcorrinteg();
 
@@ -128,7 +127,7 @@ namespace hydrogen_lda {
 
         //! A private member function.
         /*!
-            1電子積分が格納された、nalpha×nalphaの2次元配列を生成する
+            1電子積分が格納された、nalpha☓nalphaの2次元配列を生成する
         */
         void make_oneelectroninteg();
 
@@ -140,7 +139,7 @@ namespace hydrogen_lda {
 
         //! A private member function.
         /*!
-            2電子積分が格納されたnalpha×nalpha×nalpha×nalphaの4次元配列を生成する
+            2電子積分が格納されたnalpha☓nalpha☓nalpha☓nalphaの4次元配列を生成する
         */
         void make_twoelectroninteg();
 
@@ -215,12 +214,6 @@ namespace hydrogen_lda {
             Fock行列
         */
         Eigen::MatrixXd f_;
-        
-        //! A private member variable.
-        /*!
-            Gauss-Legendre積分用オブジェクト
-        */
-        gausslegendre::Gauss_Legendre gl_;
 
         //! A private member variable.
         /*!
@@ -287,4 +280,4 @@ namespace hydrogen_lda {
         
 }
 
-#endif  // HELIUM_LDA_H_
+#endif  // _HYDROGEN_LDA_H_

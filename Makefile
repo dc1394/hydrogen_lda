@@ -6,7 +6,7 @@ PROG = hydrogen_lda
 #
 # ソースコードが存在する相対パス
 #
-VPATH = src/alglib/src src/hydrogen_lda src/hydrogen_lda/gausslegendre
+VPATH = src
 
 #
 # コンパイル対象のソースファイル群（カレントディレクトリ以下の*.cppファイル）
@@ -36,12 +36,12 @@ CXX = g++
 #
 # C++コンパイラに与える、（最適化等の）オプション
 #
-CXXFLAGS = -Wall -Wextra -O3 -std=c++17 -mtune=native -march=native -fopenmp -I/home/dc1394/oss/libxc-5.0.0/src
+CXXFLAGS = -Wall -Wextra -O3 -std=c++17 -mtune=native -march=native -fopenmp
 
 #
 # リンク対象に含めるライブラリの指定
 #
-LDFLAGS = -lm -ldl -L/home/dc1394/oss/libxc-5.0.0/src/.libs -lxc
+LDFLAGS = -lm -ldl -L/home/dc1394/oss/libxc-5.2.3/src/.libs -lxc
 
 #
 # makeの動作

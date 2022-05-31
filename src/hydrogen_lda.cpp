@@ -23,16 +23,16 @@
 #include <iostream>                             // for std::cerr, std::cin, std::cout
 #include <optional>                             // for std::make_optional, std::nullopt
 #include <boost/assert.hpp>                     // for BOOST_ASSERT
-#include <boost/format.hpp>                     // for boost::format
 #include <boost/math/constants/constants.hpp>   // for boost::math::constants::pi
+#include <boost/math/quadrature/gauss.hpp>      // for boost::math::quadrature::gauss
 #include <Eigen/Eigenvalues>                    // for Eigen::GeneralizedSelfAdjointEigenSolver
+#include <fmt/format.h>                         // for fmt::format
 
 namespace hydrogen_lda {
     // #region コンストラクタ・デストラクタ
 
     Hydrogen_LDA::Hydrogen_LDA()
-        :   gl_(INTEGTABLENUM),
-            pcfunc_(new xc_func_type, xcfunc_deleter),
+        :   pcfunc_(new xc_func_type, xcfunc_deleter),
             pxfunc_(new xc_func_type, xcfunc_deleter)
     {
         xc_func_init(pcfunc_.get(), XC_LDA_C_VWN, XC_POLARIZED);
@@ -96,7 +96,7 @@ namespace hydrogen_lda {
             // 今回のSCF計算のエネルギーを計算する
             enew = calc_energy();
 
-            std::cout << boost::format("Iteration # %2d: KS eigenvalue = %.14f, energy = %.14f\n") % iter % epsilon_ % enew;
+            std::cout << fmt::format("Iteration # {:2d}: KS eigenvalue = {:.14f}, energy = {:.14f}\n", iter, epsilon_, enew);
 
             // SCF計算が収束したかどうか
             if (std::fabs(enew - eold) < Hydrogen_LDA::SCFTHRESHOLD) {
@@ -162,10 +162,10 @@ namespace hydrogen_lda {
 #endif
 
 		std::cout << "\nエネルギーの内訳：\n";
-		std::cout << boost::format("運動エネルギー = %.14f (Hartree)\n") % kinetic;
-		std::cout << boost::format("ハートリーエネルギー = %.14f (Hartree)\n") % (0.5 * hartree);
-		std::cout << boost::format("核との相互作用によるエネルギー = %.14f (Hartree)\n") % nuclear;
-		std::cout << boost::format("交換相関エネルギー = %.14f (Hartree)") % exc << std::endl;
+		std::cout << fmt::format("運動エネルギー = {:.14f} (Hartree)\n", kinetic);
+		std::cout << fmt::format("ハートリーエネルギー = {:.14f} (Hartree)\n", 0.5 * hartree);
+		std::cout << fmt::format("核との相互作用によるエネルギー = {:.14f} (Hartree)\n", nuclear);
+		std::cout << fmt::format("交換相関エネルギー = {:.14f} (Hartree)", exc) << std::endl;
 	}
 	
     // #endregion publicメンバ関数
@@ -203,7 +203,7 @@ namespace hydrogen_lda {
 
     double Hydrogen_LDA::calc_exc_energy() const
     {
-        using namespace boost::math::constants;
+        using namespace boost::math;
         
         auto const func = [this](double x)
         {
@@ -231,7 +231,7 @@ namespace hydrogen_lda {
         };
 
         // K'を求める
-        return 4.0 * pi<double>() * gl_.qgauss(func, 0.0, Hydrogen_LDA::MAXR);
+        return 4.0 * constants::pi<double>() * quadrature::gauss<double, INTEGTABLENUM>::integrate(func, 0.0, Hydrogen_LDA::MAXR);
     }
 	
     void Hydrogen_LDA::input_nalpha()
@@ -281,7 +281,7 @@ namespace hydrogen_lda {
 
     void Hydrogen_LDA::make_exchcorrinteg()
     {
-        using namespace boost::math::constants;
+        using namespace boost::math;
         
         for (auto p = 0; p < nalpha_; p++) {
             for (auto q = 0; q < nalpha_; q++) {
@@ -311,7 +311,7 @@ namespace hydrogen_lda {
                 };
         
                 // Kpqの要素を埋める
-                k_[p][q] = 4.0 * pi<double>() * gl_.qgauss(func, 0.0, Hydrogen_LDA::MAXR);
+                k_[p][q] = 4.0 * constants::pi<double>() * quadrature::gauss<double, INTEGTABLENUM>::integrate(func, 0.0, Hydrogen_LDA::MAXR);
             }
         }
     }
