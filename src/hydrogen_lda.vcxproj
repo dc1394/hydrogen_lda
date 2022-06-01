@@ -19,40 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="alglib\src\alglibinternal.cpp" />
-    <ClCompile Include="alglib\src\alglibmisc.cpp" />
-    <ClCompile Include="alglib\src\ap.cpp" />
-    <ClCompile Include="alglib\src\dataanalysis.cpp" />
-    <ClCompile Include="alglib\src\diffequations.cpp" />
-    <ClCompile Include="alglib\src\fasttransforms.cpp" />
-    <ClCompile Include="alglib\src\integration.cpp" />
-    <ClCompile Include="alglib\src\interpolation.cpp" />
-    <ClCompile Include="alglib\src\linalg.cpp" />
-    <ClCompile Include="alglib\src\optimization.cpp" />
-    <ClCompile Include="alglib\src\solvers.cpp" />
-    <ClCompile Include="alglib\src\specialfunctions.cpp" />
-    <ClCompile Include="alglib\src\statistics.cpp" />
-    <ClCompile Include="hydrogen_lda\gausslegendre\gausslegendre.cpp" />
-    <ClCompile Include="hydrogen_lda\hydrogen_lda.cpp" />
-    <ClCompile Include="hydrogen_lda\hydrogen_lda_main.cpp" />
+    <ClCompile Include="hydrogen_lda.cpp" />
+    <ClCompile Include="hydrogen_lda_main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="alglib\src\alglibinternal.h" />
-    <ClInclude Include="alglib\src\alglibmisc.h" />
-    <ClInclude Include="alglib\src\ap.h" />
-    <ClInclude Include="alglib\src\dataanalysis.h" />
-    <ClInclude Include="alglib\src\diffequations.h" />
-    <ClInclude Include="alglib\src\fasttransforms.h" />
-    <ClInclude Include="alglib\src\integration.h" />
-    <ClInclude Include="alglib\src\interpolation.h" />
-    <ClInclude Include="alglib\src\linalg.h" />
-    <ClInclude Include="alglib\src\optimization.h" />
-    <ClInclude Include="alglib\src\solvers.h" />
-    <ClInclude Include="alglib\src\specialfunctions.h" />
-    <ClInclude Include="alglib\src\statistics.h" />
-    <ClInclude Include="alglib\src\stdafx.h" />
-    <ClInclude Include="hydrogen_lda\gausslegendre\gausslegendre.h" />
-    <ClInclude Include="hydrogen_lda\hydrogen_lda.h" />
+    <ClInclude Include="hydrogen_lda.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -65,26 +39,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -95,15 +69,19 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\..\Visual Studio Settings\プロパティシート\Microsoft.Cpp.Win32.user.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\..\Visual Studio Settings\プロパティシート\Microsoft.Cpp.Win32.user.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\..\Visual Studio Settings\プロパティシート\Microsoft.Cpp.x64.user.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\..\Visual Studio Settings\プロパティシート\Microsoft.Cpp.x64.user.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -134,8 +112,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\mylib64\gsl\x86\lib\gsl;C:\mylib64\libxc\lib\ia32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>gsl.lib;libxc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\mylib64\libxc\lib\ia32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libxc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/NODEFAULTLIB:MSVCRT %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
@@ -148,11 +126,13 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\mylib64\libxc\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\mylib64\libxc\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libxc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -167,9 +147,13 @@
       <ConformanceMode>true</ConformanceMode>
       <CCppSupport>Cpp17Support</CCppSupport>
       <PrecompiledHeaderFile />
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>C:\mylib64\libxc\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

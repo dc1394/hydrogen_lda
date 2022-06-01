@@ -8,6 +8,7 @@
 　ギーを求めるコードです。ビルドには以下のライブラリが必要です。
 　・Boost C++ Libraries
 　・Eigen
+　・fmtlib
 　・Libxc
 
 ★更新履歴
@@ -48,11 +49,12 @@
 * DEALINGS IN THE SOFTWARE.
 */
 
-　hydrogen_ldaにはALGLIB ProjectによるALGLIB®を使用しています。こちらのライセン
-　スはGPL 2+になります。
 
 　hydrogen_ldaにはEigen projectによるEigenを使用しています。こちらのライセンスは
 　MPL2になります。
+
+　hydrogen_ldaにはVictor Zverovichらによるfmtlibを使用しています。こちらのライセ
+　ンスはMIT licenseになります。
 
 　hydrogen_ldaにはMiguel A. L. MarquesらによるLibxcを使用しています。こちらのラ
 　イセンスはMozilla Public License 2.0になります。
