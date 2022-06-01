@@ -26,7 +26,11 @@
 #include <boost/math/constants/constants.hpp>   // for boost::math::constants::pi
 #include <boost/math/quadrature/gauss.hpp>      // for boost::math::quadrature::gauss
 #include <Eigen/Eigenvalues>                    // for Eigen::GeneralizedSelfAdjointEigenSolver
-#include <fmt/format.h>                         // for fmt::format
+#if _MSC_VER >= 1930
+    #include <format>                           // for std::format
+#else
+    #include <fmt/format.h>                     // for fmt::format
+#endif
 
 namespace hydrogen_lda {
     // #region コンストラクタ・デストラクタ
@@ -55,6 +59,11 @@ namespace hydrogen_lda {
 
     std::optional<double> Hydrogen_LDA::do_scfloop()
     {
+#if _MSC_VER >= 1930
+        using namespace std;
+#else
+        using namespace fmt;
+#endif
         // GTOの肩の係数が格納された配列を生成
         make_alpha();
 
@@ -96,7 +105,7 @@ namespace hydrogen_lda {
             // 今回のSCF計算のエネルギーを計算する
             enew = calc_energy();
 
-            std::cout << fmt::format("Iteration # {:2d}: KS eigenvalue = {:.14f}, energy = {:.14f}\n", iter, epsilon_, enew);
+            std::cout << format("Iteration # {:2d}: KS eigenvalue = {:.14f}, energy = {:.14f}\n", iter, epsilon_, enew);
 
             // SCF計算が収束したかどうか
             if (std::fabs(enew - eold) < Hydrogen_LDA::SCFTHRESHOLD) {
@@ -111,6 +120,11 @@ namespace hydrogen_lda {
 
 	void Hydrogen_LDA::express_energy_breakdown() const
 	{
+#if _MSC_VER >= 1930
+        using namespace std;
+#else
+        using namespace fmt;
+#endif
 		using namespace boost::math::constants;
 
 #ifdef _DEBUG
@@ -162,10 +176,10 @@ namespace hydrogen_lda {
 #endif
 
 		std::cout << "\nエネルギーの内訳：\n";
-		std::cout << fmt::format("運動エネルギー = {:.14f} (Hartree)\n", kinetic);
-		std::cout << fmt::format("ハートリーエネルギー = {:.14f} (Hartree)\n", 0.5 * hartree);
-		std::cout << fmt::format("核との相互作用によるエネルギー = {:.14f} (Hartree)\n", nuclear);
-		std::cout << fmt::format("交換相関エネルギー = {:.14f} (Hartree)", exc) << std::endl;
+		std::cout << format("運動エネルギー = {:.14f} (Hartree)\n", kinetic);
+		std::cout << format("ハートリーエネルギー = {:.14f} (Hartree)\n", 0.5 * hartree);
+		std::cout << format("核との相互作用によるエネルギー = {:.14f} (Hartree)\n", nuclear);
+		std::cout << format("交換相関エネルギー = {:.14f} (Hartree)", exc) << std::endl;
 	}
 	
     // #endregion publicメンバ関数
